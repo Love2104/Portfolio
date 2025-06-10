@@ -14,13 +14,10 @@ const projects = [
     image: '/project1.jpg',
     featured: true
   },
-  // ... rest of the projects array remains the same
 ];
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-
   const categories: Category[] = ['All', 'Web App', 'Mobile', 'UI/UX'];
 
   const filteredProjects = projects.filter(project => 
@@ -58,14 +55,12 @@ const Projects = () => {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project) => (
             <div
               key={project.title}
               className={`group relative bg-white dark:bg-slate-800 rounded-xl overflow-hidden backdrop-blur-sm 
                 transform transition-all duration-500 hover:scale-[1.02]
                 ${project.featured ? 'md:col-span-2' : ''}`}
-              onMouseEnter={() => setHoveredProject(project.title)}
-              onMouseLeave={() => setHoveredProject(null)}
             >
               <div className="aspect-video relative overflow-hidden">
                 <img

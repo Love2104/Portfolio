@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code2, Briefcase, Coffee, Users } from 'lucide-react';
+import { Code2, Briefcase } from 'lucide-react';
 
 const skills = [
   { name: 'React', level: 90 },
@@ -13,8 +13,6 @@ const skills = [
 const stats = [
   { icon: <Code2 className="w-6 h-6" />, value: '10+', label: 'Projects Completed' },
   { icon: <Briefcase className="w-6 h-6" />, value: '2.5+', label: 'Years Experience' },
-  // { icon: <Coffee className="w-6 h-6" />, value: '+', label: 'Cups of Coffee' },
-  // { icon: <Users className="w-6 h-6" />, value: '20+', label: 'Happy Clients' },
 ];
 
 const About = () => {
@@ -73,7 +71,7 @@ const About = () => {
                   <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left transition-transform duration-1000 ease-out group-hover:scale-x-105"
-                      style={{ width: `${skill.level}%` }}
+                      style={ { width: `${skill.level}%` } }
                     />
                   </div>
                 </div>
