@@ -53,47 +53,47 @@ const Contact = () => {
 
     return true;
   };
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  if (!validateForm()) return;
 
-    if (!validateForm()) return;
+  setIsSubmitting(true);
+  setFormStatus({ type: null, message: '' });
 
-    setIsSubmitting(true);
-    setFormStatus({ type: null, message: '' });
+  try {
+    const response = await fetch('https://portfolio-backend-v4y3.onrender.com/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
 
-    try {
-      const response = await fetch('https://portfolio-backend-v4y3.onrender.com/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+    const result = await response.json();
+
+    if (response.ok) {
+      setFormStatus({
+        type: 'success',
+        message: result.message || 'Message sent successfully! I will get back to you soon.'
       });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setFormStatus({
-          type: 'success',
-          message: result.message || 'Message sent successfully! I will get back to you soon.'
-        });
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setFormStatus({
-          type: 'error',
-          message: result.message || 'Failed to send message. Please try again later.'
-        });
-      }
-    } catch (error) {
+      setFormData({ name: '', email: '', message: '' });
+    } else {
       setFormStatus({
         type: 'error',
-        message: 'Failed to send message. Please try again later.'
+        message: result.message || 'Failed to send message. Please try again later.'
       });
-    } finally {
-      setIsSubmitting(false);
     }
-  };
+  } catch (error) {
+    setFormStatus({
+      type: 'error',
+      message: 'Failed to send message. Please try again later.'
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-slate-900 transition-colors duration-300">
