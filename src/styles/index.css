@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+::selection {
+  background-color: #3B82F6;
+  color: white;
+}
+
+/* Theme transition classes */
+.theme-transition {
+  transition: background-color 0.3s ease-in-out,
+              color 0.3s ease-in-out,
+              border-color 0.3s ease-in-out;
+}
+
+/* Base colors for light/dark mode */
+:root {
+  --text-primary: theme('colors.slate.900');
+  --text-secondary: theme('colors.slate.700');
+  --bg-primary: theme('colors.white');
+  --bg-secondary: theme('colors.gray.50');
+}
+
+.dark {
+  --text-primary: theme('colors.slate.100');
+  --text-secondary: theme('colors.slate.300');
+  --bg-primary: theme('colors.slate.900');
+  --bg-secondary: theme('colors.slate.800');
+}
+
+/* Add animation for project cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.grid > div {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
