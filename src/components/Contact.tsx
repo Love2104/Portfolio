@@ -56,26 +56,35 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
     setFormStatus({ type: null, message: '' });
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      setFormStatus({
-        type: 'success',
-        message: 'Message sent successfully! I will get back to you soon.'
+      const response = await fetch('https://portfolio-backend-v4y3.onrender.com/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormStatus({
+          type: 'success',
+          message: result.message || 'Message sent successfully! I will get back to you soon.'
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setFormStatus({
+          type: 'error',
+          message: result.message || 'Failed to send message. Please try again later.'
+        });
+      }
     } catch (error) {
       setFormStatus({
         type: 'error',
@@ -156,32 +165,19 @@ const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               required
-              rows={6}
-              className="w-full px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-900 dark:text-white transition-colors duration-300 resize-none"
+              rows={4}
+              className="w-full px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-slate-900 dark:text-white transition-colors duration-300"
               disabled={isSubmitting}
-            />
+            ></textarea>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full px-6 py-3 bg-blue-500 text-white rounded-lg flex items-center justify-center gap-2 transition-all ${
-              isSubmitting
-                ? 'opacity-75 cursor-not-allowed'
-                : 'hover:bg-blue-600 transform hover:scale-[1.02]'
-            }`}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Sending...</span>
-              </>
-            ) : (
-              <>
-                <span>Send Message</span>
-                <Send size={20} />
-              </>
-            )}
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {!isSubmitting && <Send size={18} />}
           </button>
         </form>
       </div>
