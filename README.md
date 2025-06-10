@@ -3,7 +3,7 @@
 
 
 ## 🌟 Live Demo  
-🔗 [View Live Site]([https://your-deployed-link.com](https://lovechourasia-portfolio.netlify.app/)) 
+🔗 [View Live Site]([https://lovechourasia-portfolio.netlify.app/]) 
 
 ---
 
