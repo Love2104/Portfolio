@@ -3,50 +3,49 @@ import { Calendar, MapPin } from 'lucide-react';
 
 const experiences = [
   {
-    title: 'Desingn Manager',
+    title: 'Design Manager',
     company: 'Election Commission',
     location: 'IIT Kanpur',
     period: 'May 2025 - Present',
     description: [
-  'Led the visual branding and promotional design for campus-wide elections and initiatives',
-  'Designed impactful posters, merchandise, and digital assets to enhance voter engagement',
-  'Mentored junior designers and reviewed creative submissions for quality and alignment',
-  'Managed design timelines and ensured timely delivery of campaign materials'
-]
-
+      'Led the visual branding and promotional design for campus-wide elections and initiatives',
+      'Designed impactful posters, merchandise, and digital assets to enhance voter engagement',
+      'Mentored junior designers and reviewed creative submissions for quality and alignment',
+      'Managed design timelines and ensured timely delivery of campaign materials'
+    ]
   },
   {
-    title: 'Seceratary(Web Development)',
-    company: 'Academic & carrer council , Society of Civil Engineering',
+    title: 'Secretary (Web Development)',
+    company: 'Academic & Career Council, Society of Civil Engineering',
     location: 'IIT Kanpur',
     period: 'May 2024 - April 2025',
-   description: [
-  'Developed the Academic & Career Council website with a dynamic structure for annual updates and streamlined maintenance',
-  'Managed and regularly updated the Society of Civil Engineering website to showcase events, resources, and announcements',
-  'Collaborated with council members to ensure timely, accurate, and user-friendly web content for the student community'
-]
-
-  }, {
-  title: 'Secretary (Design)',
-  company: 'Entrepreneurship Cell',
-  location: 'IIT Kanpur',
-  period: 'May 2024 - April 2025',
-  description: [
-    'Led the visual design strategy for campaigns, events, and initiatives across social media and campus outreach',
-    'Designed posters, reels, and digital assets using Figma, Canva, and Adobe Suite to engage a wide student audience',
-    'Collaborated with content and tech teams to maintain visual consistency and enhance user engagement'
-  ]
-},
+    description: [
+      'Developed the Academic & Career Council website with a dynamic structure for annual updates and streamlined maintenance',
+      'Managed and regularly updated the Society of Civil Engineering website to showcase events, resources, and announcements',
+      'Collaborated with council members to ensure timely, accurate, and user-friendly web content for the student community'
+    ]
+  }, 
   {
-  title: 'Senior Election Officer (Web Development)',
-  company: 'Election Commission',
-  location: 'IIT Kanpur',
-  period: 'May 2024 - April 2025',
-  description: [
-    'Developed and maintained the Election Commission website to support transparent and timely student elections',
-    'Created interactive web interfaces for candidate info, voting guidelines, and results using modern frameworks',
-    'Collaborated with design and operations teams to ensure accurate and accessible election-related content'
-  ]
+    title: 'Secretary (Design)',
+    company: 'Entrepreneurship Cell',
+    location: 'IIT Kanpur',
+    period: 'May 2024 - April 2025',
+    description: [
+      'Led the visual design strategy for campaigns, events, and initiatives across social media and campus outreach',
+      'Designed posters, reels, and digital assets using Figma, Canva, and Adobe Suite to engage a wide student audience',
+      'Collaborated with content and tech teams to maintain visual consistency and enhance user engagement'
+    ]
+  },
+  {
+    title: 'Senior Election Officer (Web Development)',
+    company: 'Election Commission',
+    location: 'IIT Kanpur',
+    period: 'May 2024 - April 2025',
+    description: [
+      'Developed and maintained the Election Commission website to support transparent and timely student elections',
+      'Created interactive web interfaces for candidate info, voting guidelines, and results using modern frameworks',
+      'Collaborated with design and operations teams to ensure accurate and accessible election-related content'
+    ]
   }
 ];
 
@@ -64,30 +63,28 @@ const Experience = () => {
         </div>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-blue-200 dark:bg-blue-900" />
+          {/* Timeline line - hidden on mobile */}
+          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-blue-200 dark:bg-blue-900" />
 
           {/* Experience items */}
-          <div className="space-y-12">
+          <div className="space-y-8 md:space-y-12">
             {experiences.map((exp, index) => (
               <div
                 key={index}
-                className={`flex items-center ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
-                } gap-8`}
+                className="relative group"
               >
-                {/* Timeline dot */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full" />
+                {/* Timeline dot - hidden on mobile */}
+                <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full" />
 
                 {/* Content */}
-                <div className={`w-1/2 ${index % 2 === 0 ? 'text-right pr-8' : 'pl-8'}`}>
+                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-8 md:pr-0' : 'md:mr-auto md:pr-8 md:pl-0'}`}>
                   <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
                       {exp.title}
                     </h3>
                     <h4 className="text-blue-500 font-semibold mb-2">{exp.company}</h4>
                     
-                    <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400 mb-4 justify-end">
+                    <div className={`flex flex-col sm:flex-row gap-4 text-sm text-slate-600 dark:text-slate-400 mb-4 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
                       <div className="flex items-center gap-1">
                         <Calendar size={16} />
                         <span>{exp.period}</span>
