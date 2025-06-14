@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -53,47 +53,50 @@ const Contact = () => {
 
     return true;
   };
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
 
-  if (!validateForm()) return;
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  setIsSubmitting(true);
-  setFormStatus({ type: null, message: '' });
+    if (!validateForm()) return;
 
-  try {
-    const response = await fetch('https://portfolio-backend-v4y3.onrender.com/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+    setIsSubmitting(true);
+    setFormStatus({ type: null, message: '' });
 
-    const result = await response.json();
-
-    if (response.ok) {
-      setFormStatus({
-        type: 'success',
-        message: result.message || 'Message sent successfully! I will get back to you soon.'
+    try {
+      // Simulate network delay for demo purposes
+      // await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const response = await fetch('https://portfolio-backend-v4y3.onrender.com/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      setFormData({ name: '', email: '', message: '' });
-    } else {
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setFormStatus({
+          type: 'success',
+          message: result.message || 'Message sent successfully! I will get back to you soon.'
+        });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setFormStatus({
+          type: 'error',
+          message: result.message || 'Failed to send message. Please try again later.'
+        });
+      }
+    } catch (error) {
       setFormStatus({
         type: 'error',
-        message: result.message || 'Failed to send message. Please try again later.'
+        message: 'Failed to send message. Please check your connection and try again.'
       });
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    setFormStatus({
-      type: 'error',
-      message: 'Failed to send message. Please try again later.'
-    });
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+  };
 
   return (
     <section id="contact" className="py-20 bg-white dark:bg-slate-900 transition-colors duration-300">
@@ -107,7 +110,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
         {formStatus.type && (
           <div
-            className={`mb-6 p-4 rounded-lg flex items-center gap-2 ${
+            className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
               formStatus.type === 'success'
                 ? 'bg-green-500/10 text-green-500'
                 : 'bg-red-500/10 text-red-500'
@@ -170,14 +173,29 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               disabled={isSubmitting}
             ></textarea>
           </div>
+          
+          {isSubmitting && (
+            <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                <div className="bg-blue-600 h-2 rounded-full w-full animate-progress"></div>
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? 'Sending...' : 'Send Message'}
-            {!isSubmitting && <Send size={18} />}
+            {isSubmitting ? (
+              <>
+                <Loader2 size={18} className="animate-spin" />
+                <span>Sending...</span>
+              </>
+            ) : (
+              <>
+                <span>Send Message</span>
+                <Send size={18} />
+              </>
+            )}
           </button>
         </form>
       </div>

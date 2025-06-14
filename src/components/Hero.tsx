@@ -164,18 +164,38 @@ const Hero = () => {
             }`} />
           </motion.a>
           
-          <motion.a href="#resume" className={`px-8 py-4 rounded-lg flex items-center gap-3 group relative overflow-hidden transition-all ${
-            theme === 'dark' 
-              ? 'bg-slate-800 hover:bg-slate-700/50' 
-              : 'bg-white hover:bg-slate-50'
-          }`} whileHover={{ scale: 1.05 }} style={{boxShadow: theme === 'light' ? '0 4px 14px rgba(0, 0, 0, 0.05)' : ''}}>
-            <FileText className="w-5 h-5 text-purple-500" />
-            <span className={theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}>Resume</span>
-            <div className={`absolute inset-0 border rounded-lg pointer-events-none ${
-              theme === 'dark' ? 'border-slate-600/50' : 'border-slate-200'
-            }`} />
-          </motion.a>
-          
+          <motion.a
+  // IMPORTANT: Replace this placeholder with the actual URL to your resume.
+  href="https://drive.google.com/file/d/1_-PdFUv1FQQCfKcojpEBn2VQTsV-QSb9/view?usp=drive_link"
+  
+  // This attribute opens the link in a new tab.
+  target="_blank"
+  
+  // This is a security best practice for links opening in a new tab.
+  rel="noopener noreferrer"
+  
+  // The rest of your styling and animation props remain the same.
+  className={`px-8 py-4 rounded-lg flex items-center gap-3 group relative overflow-hidden transition-all duration-300 ${
+    theme === 'dark' 
+      ? 'bg-slate-800 hover:bg-slate-700/50 text-slate-100' 
+      : 'bg-white hover:bg-slate-50 text-slate-800'
+  }`}
+  whileHover={{ scale: 1.05 }}
+  style={{
+    boxShadow: theme === 'light' ? '0 4px 14px rgba(0, 0, 0, 0.05)' : '',
+  }}
+>
+  <FileText className="w-5 h-5 text-purple-500" />
+  <span>Resume</span>
+  <div
+    className={`absolute inset-0 border rounded-lg pointer-events-none transition-colors duration-300 ${
+      theme === 'dark' 
+        ? 'border-slate-600/50 group-hover:border-slate-500' 
+        : 'border-slate-200 group-hover:border-slate-300'
+    }`}
+  />
+</motion.a>
+
           <motion.a href="#contact" className={`px-8 py-4 rounded-lg flex items-center gap-3 group relative overflow-hidden transition-all ${
              theme === 'dark'
                 ? 'bg-gradient-to-br from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30'
