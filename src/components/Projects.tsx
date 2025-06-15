@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
 import { Github, ExternalLink, Plus } from 'lucide-react';
 
-type Category = 'All' | 'Web App' | 'Mobile' | 'UI/UX';
+type Category = 'All' | 'Web App' | 'Graphics Engine';
 
 const projects = [
   {
-    title: 'Project 1',
+    title: 'Academics and Career Council, IIT Kanpur',
     category: 'Web App',
     description: 'A full-stack web application built with React and Node.js. Features include real-time updates, user authentication, and responsive design.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Tailwind CSS'],
-    github: 'https://github.com',
-    live: 'https://example.com',
-    image: '/project1.jpg',
+    technologies: ['React', 'Node.js', 'Tailwind CSS'],
+    github: 'https://github.com/Love2104/AnCWebsite',
+    live: 'https://www.anciitk.co.in/',
+    image: '/project1.png',
     featured: true
   },
+  {
+    title: '3D Graphics & Shader Renderer',
+    category: 'Graphics Engine',
+    description: 'A real-time 3D rendering engine built with C++, OpenGL, and ImGui. Features include multiple light types, post-processing effects, and an interactive scene UI.',
+    technologies: ['C++', 'OpenGL', 'GLFW', 'GLM', 'ImGui'],
+    github: 'https://github.com/Love2104/GameDev-Summer-Project',
+    live: '',
+    image: '/project2.png',
+    featured: true
+  }
 ];
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState<Category>('All');
-  const categories: Category[] = ['All', 'Web App', 'Mobile', 'UI/UX'];
+  const categories: Category[] = ['All', 'Web App', 'Graphics Engine'];
 
   const filteredProjects = projects.filter(project => 
     activeCategory === 'All' ? true : project.category === activeCategory
@@ -62,11 +72,11 @@ const Projects = () => {
                 transform transition-all duration-500 hover:scale-[1.02]
                 ${project.featured ? 'md:col-span-2' : ''}`}
             >
-              <div className="aspect-video relative overflow-hidden">
+              <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[420px] xl:h-[450px] overflow-hidden rounded-xl">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
@@ -106,15 +116,18 @@ const Projects = () => {
                     <Github size={18} />
                     <span>Code</span>
                   </a>
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 rounded-lg text-white hover:bg-blue-600 transition-all"
-                  >
-                    <ExternalLink size={18} />
-                    <span>Live Demo</span>
-                  </a>
+                  
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-500 rounded-lg text-white hover:bg-blue-600 transition-all"
+                    >
+                      <ExternalLink size={18} />
+                      <span>Live Demo</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
