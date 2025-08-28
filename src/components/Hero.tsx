@@ -166,7 +166,7 @@ const Hero = () => {
           
           <motion.a
   // IMPORTANT: Replace this placeholder with the actual URL to your resume.
-  href="https://drive.google.com/file/d/1_-PdFUv1FQQCfKcojpEBn2VQTsV-QSb9/view?usp=drive_link"
+  href="https://drive.google.com/file/d/1f54ZE21uDnm2pbMtHTtopO5yNKUi9Qzj/view?usp=sharing"
   
   // This attribute opens the link in a new tab.
   target="_blank"

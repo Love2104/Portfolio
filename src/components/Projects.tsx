@@ -5,6 +5,16 @@ type Category = 'All' | 'Web App' | 'Graphics Engine';
 
 const projects = [
   {
+    title: 'ShopEase - Eccomerce Website',
+    category: 'Web App',
+    description: 'A full-stack e-commerce web application built with React and Node.js. Features include user authentication, product management, shopping cart, and payment integration.',
+    technologies: ['React', 'Node.js', 'Express', 'Tailwind CSS'],
+    github: 'https://github.com/Love2104/Portfolio',
+    live: 'https://ecom-frontend-iota-three.vercel.app/',
+    image: '/image.png',
+    featured: true
+  },
+  {
     title: 'Academics and Career Council, IIT Kanpur',
     category: 'Web App',
     description: 'A full-stack web application built with React and Node.js. Features include real-time updates, user authentication, and responsive design.',
