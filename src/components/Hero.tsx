@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, FileText, Send } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useTheme } from '../context/ThemeContext'; // <-- STEP 1: Import the hook
+import { useTheme } from '../context/ThemeContext';
 
 const Hero = () => {
-  const { theme } = useTheme(); // <-- STEP 2: Get the current theme
+  const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   const lineOneText = "Hi, I'm".split("");
@@ -19,7 +19,7 @@ const Hero = () => {
     }),
   };
 
-  const subtitle = "Full Stack Developer".split(" ");
+  const subtitle = ['Full Stack Developer', '·', 'AI / ML'].join(' ').split(' ');
   const { scrollY } = useScroll();
   const yPos = useTransform(scrollY, [0, 300], [0, 100]);
 
@@ -29,20 +29,19 @@ const Hero = () => {
 
   if (!mounted) return null;
 
-  // --- STEP 3: Apply conditional styling throughout the component ---
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className={`min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 relative overflow-hidden transition-colors duration-300 ${
         theme === 'dark' ? 'bg-slate-900' : 'bg-white'
       }`}
     >
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5 mix-blend-soft-light pointer-events-none" />
-      <motion.div 
-        className="absolute inset-0 opacity-5"
+      {/* Subtle grid background */}
+      <motion.div
+        className="absolute inset-0 opacity-[0.03]"
         style={{ y: yPos }}
       >
-        <div className="h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        <div className="h-full w-full bg-[linear-gradient(to_right,#3b82f6_1px,transparent_1px),linear-gradient(to_bottom,#3b82f6_1px,transparent_1px)] bg-[size:32px_32px]" />
       </motion.div>
 
       <motion.div
@@ -53,7 +52,7 @@ const Hero = () => {
         <div className="mb-4">
           <motion.h2
             className={`text-3xl md:text-4xl lg:text-5xl font-medium mb-3 ${
-              theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+              theme === 'dark' ? 'text-slate-300' : 'text-slate-600'
             }`}
             initial="hidden"
             animate="visible"
@@ -66,11 +65,10 @@ const Hero = () => {
             ))}
           </motion.h2>
 
+          {/* Name — plain white/dark, no gradient, no blue */}
           <motion.h1
-            className={`text-4xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent ${
-              theme === 'dark'
-                ? 'bg-gradient-to-r from-slate-100 to-slate-400'
-                : 'bg-gradient-to-r from-slate-800 to-slate-500'
+            className={`text-4xl md:text-6xl lg:text-7xl font-bold ${
+              theme === 'dark' ? 'text-[#F5F5F5]' : 'text-slate-900'
             }`}
             initial="hidden"
             animate="visible"
@@ -82,52 +80,39 @@ const Hero = () => {
                 custom={i + lineOneText.length}
                 variants={charVariants}
                 className="inline-block"
-                style={{
-                  textShadow: theme === 'dark' ? '0 2px 8px rgba(255,255,255,0.1)' : 'none'
-                }}
               >
                 {char === " " ? "\u00A0" : char}
               </motion.span>
             ))}
           </motion.h1>
         </div>
-        
+
         <motion.div
           className="relative mb-8"
           initial={{ width: 0 }}
           animate={{ width: '80%' }}
           transition={{ delay: 1.2, duration: 1, ease: 'circOut' }}
         >
-          <div className="h-[2px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-          <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent ${
-            theme === 'dark' ? 'mix-blend-overlay' : ''
-          }`} />
+          <div className={`h-[1px] ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-300'}`} />
         </motion.div>
 
+        {/* Subtitle */}
         <motion.div
-          className="text-xl sm:text-2xl mb-8 font-medium"
-          initial="hidden"
-          animate="visible"
+          className="flex items-center justify-center gap-3 text-xl sm:text-2xl mb-8 font-medium"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4, type: 'spring', stiffness: 120 }}
         >
-          {subtitle.map((word, i) => (
-            <motion.span
-              key={i}
-              className={`inline-block mr-3 ${
-                theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
-              }`}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: {
-                  opacity: 1, y: 0,
-                  transition: { delay: i * 0.2 + 1.4, type: "spring", stiffness: 120 }
-                }
-              }}
-            >
-              {word}
-            </motion.span>
-          ))}
+          <span className={theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}>
+            Full Stack Developer
+          </span>
+          <span className="text-blue-500">·</span>
+          <span className={theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}>
+            Building with AI
+          </span>
         </motion.div>
 
+        {/* Description — no highlighted words */}
         <motion.p
           className={`text-base sm:text-lg mb-12 max-w-2xl leading-relaxed ${
             theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
@@ -136,83 +121,63 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, type: "spring", stiffness: 100 }}
         >
-          Crafting digital excellence through{" "}
-          <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            innovative solutions
-          </span>{" "}
-          and{" "}
-          <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
-            meticulous code
-          </span>
+          Crafting digital excellence through innovative solutions and meticulous code.
         </motion.p>
-        
+
+        {/* CTA Buttons — all outlined, same style */}
         <motion.div
           className="flex flex-wrap gap-4 justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.0 }}
         >
-          <motion.a href="#projects" className={`px-8 py-4 rounded-lg flex items-center gap-3 group relative overflow-hidden transition-all ${
-            theme === 'dark' 
-              ? 'bg-slate-800 hover:bg-slate-700/50' 
-              : 'bg-slate-100 hover:bg-slate-200/80'
-          }`} whileHover={{ scale: 1.05 }} style={{ boxShadow: theme === 'dark' ? '0 4px 24px rgba(99, 102, 241, 0.15)' : '0 4px 14px rgba(0, 0, 0, 0.05)'}}>
-            <span className={theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}>View Projects</span>
-            <ArrowRight className="w-5 h-5 text-indigo-500 transition-transform group-hover:translate-x-1" />
-            <div className={`absolute inset-0 border rounded-lg pointer-events-none ${
-              theme === 'dark' ? 'border-slate-600/50' : 'border-slate-300/50'
-            }`} />
-          </motion.a>
-          
+          {/* View Projects */}
           <motion.a
-  // IMPORTANT: Replace this placeholder with the actual URL to your resume.
-  href="https://drive.google.com/file/d/1f54ZE21uDnm2pbMtHTtopO5yNKUi9Qzj/view?usp=sharing"
-  
-  // This attribute opens the link in a new tab.
-  target="_blank"
-  
-  // This is a security best practice for links opening in a new tab.
-  rel="noopener noreferrer"
-  
-  // The rest of your styling and animation props remain the same.
-  className={`px-8 py-4 rounded-lg flex items-center gap-3 group relative overflow-hidden transition-all duration-300 ${
-    theme === 'dark' 
-      ? 'bg-slate-800 hover:bg-slate-700/50 text-slate-100' 
-      : 'bg-white hover:bg-slate-50 text-slate-800'
-  }`}
-  whileHover={{ scale: 1.05 }}
-  style={{
-    boxShadow: theme === 'light' ? '0 4px 14px rgba(0, 0, 0, 0.05)' : '',
-  }}
->
-  <FileText className="w-5 h-5 text-purple-500" />
-  <span>Resume</span>
-  <div
-    className={`absolute inset-0 border rounded-lg pointer-events-none transition-colors duration-300 ${
-      theme === 'dark' 
-        ? 'border-slate-600/50 group-hover:border-slate-500' 
-        : 'border-slate-200 group-hover:border-slate-300'
-    }`}
-  />
-</motion.a>
+            href="#projects"
+            className={`px-8 py-4 rounded-lg flex items-center gap-3 group border transition-all duration-200 ${
+              theme === 'dark'
+                ? 'border-white/30 text-white bg-transparent hover:bg-white hover:text-black hover:border-white'
+                : 'border-slate-800 text-slate-800 bg-transparent hover:bg-slate-900 hover:text-white'
+            }`}
+            whileHover={{ scale: 1.03 }}
+          >
+            <span>View Projects</span>
+            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+          </motion.a>
 
-          <motion.a href="#contact" className={`px-8 py-4 rounded-lg flex items-center gap-3 group relative overflow-hidden transition-all ${
-             theme === 'dark'
-                ? 'bg-gradient-to-br from-indigo-500/20 to-purple-500/20 hover:from-indigo-500/30 hover:to-purple-500/30'
-                : 'bg-transparent hover:bg-slate-100'
-          }`} whileHover={{ scale: 1.05 }}>
-            <span className={theme === 'dark' ? 'text-slate-100' : 'text-indigo-600'}>Contact Me</span>
-            <Send className="w-5 h-5 text-purple-500" />
-            <div className={`absolute inset-0 border rounded-lg pointer-events-none ${
-              theme === 'dark' ? 'border-indigo-400/20' : 'border-slate-300'
-            }`} />
+          {/* Resume */}
+          <motion.a
+            href="https://drive.google.com/file/d/1f54ZE21uDnm2pbMtHTtopO5yNKUi9Qzj/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`px-8 py-4 rounded-lg flex items-center gap-3 group border transition-all duration-200 ${
+              theme === 'dark'
+                ? 'border-white/30 text-white bg-transparent hover:bg-white hover:text-black hover:border-white'
+                : 'border-slate-800 text-slate-800 bg-transparent hover:bg-slate-900 hover:text-white'
+            }`}
+            whileHover={{ scale: 1.03 }}
+          >
+            <FileText className="w-5 h-5" />
+            <span>Resume</span>
+          </motion.a>
+
+          {/* Contact */}
+          <motion.a
+            href="#contact"
+            className={`px-8 py-4 rounded-lg flex items-center gap-3 group border transition-all duration-200 ${
+              theme === 'dark'
+                ? 'border-white/30 text-white bg-transparent hover:bg-white hover:text-black hover:border-white'
+                : 'border-slate-800 text-slate-800 bg-transparent hover:bg-slate-900 hover:text-white'
+            }`}
+            whileHover={{ scale: 1.03 }}
+          >
+            <span>Contact Me</span>
+            <Send className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
           </motion.a>
         </motion.div>
-
-        {/* Scroll indicator (left commented as per user's code) */}
       </motion.div>
     </section>
   );
-}
+};
 
 export default Hero;

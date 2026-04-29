@@ -1,105 +1,146 @@
 import React from 'react';
-import { Code2, Briefcase } from 'lucide-react';
 
-const skills = [
-  { name: 'React', level: 70 },
-  { name: 'TypeScript', level: 80 },
-  { name: 'Node.js', level: 75 },
-  { name: 'Next.js', level: 70  },
-  { name: 'Tailwind CSS', level: 85 },
-  { name: 'JavaScript', level: 80 },
+const techStack = [
+  {
+    category: 'FRONTEND',
+    skills: 'React, Next.js, TypeScript, JavaScript, Tailwind CSS, Framer Motion',
+  },
+  {
+    category: 'BACKEND',
+    skills: 'Node.js, Express, Python, PostgreSQL, MongoDB, REST APIs, GraphQL',
+  },
+  {
+    category: 'AI / ML',
+    skills: 'OpenAI API, LangChain, MediaPipe, Hugging Face, Computer Vision, RAG Pipelines',
+  },
+  {
+    category: 'TOOLS',
+    skills: 'Docker, AWS, Firebase, Git, Linux, Puppeteer, Chrome Extensions',
+  },
 ];
 
-const stats = [
-  { icon: <Code2 className="w-6 h-6" />, value: '10+', label: 'Projects Completed' },
-  { icon: <Briefcase className="w-6 h-6" />, value: '2.5+', label: 'Years Experience' },
+const tickerItems = [
+  { label: 'Featured Projects', type: 'heading' },
+  { label: 'Cricket Shot Recognition System', type: 'item' },
+  { label: 'ShopEase – E-commerce Platform', type: 'item' },
+  { label: 'Personal Portfolio Website', type: 'item' },
+  { label: 'AnC Council, IIT Kanpur', type: 'item' },
+  { label: '3D Graphics & Shader Renderer', type: 'item' },
 ];
+
+const TickerContent = () => (
+  <>
+    {tickerItems.map((item, i) => (
+      <span key={i} className="flex items-center gap-6 mr-14">
+        {item.type === 'heading' ? (
+          <span
+            className="text-slate-900 dark:text-slate-100 text-sm font-medium transition-colors duration-300"
+            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+          >
+            {item.label}
+            <span className="text-blue-500">:</span>
+          </span>
+        ) : (
+          <>
+            <span className="text-blue-500 text-[10px]">◆</span>
+            <span
+              className="text-slate-500 dark:text-slate-400 text-sm transition-colors duration-300"
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
+              {item.label}
+            </span>
+          </>
+        )}
+      </span>
+    ))}
+  </>
+);
 
 const About = () => {
   return (
-    <section id="about" className="py-20 bg-gray-50 dark:bg-slate-800/50 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-            About Me
-          </h2>
-          <div className="w-20 h-1 bg-blue-500 mx-auto rounded-full mb-8"></div>
-        </div>
+    <section
+      id="about"
+      className="w-full bg-white dark:bg-slate-900 transition-colors duration-300"
+    >
+      {/* TWO-COLUMN MAIN CONTENT */}
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 py-24">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left Column - Bio */}
-          <div className="space-y-8">
-            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl transform hover:scale-105 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
-              <h3 className="text-2xl font-semibold mb-4 text-blue-400">My Journey</h3>
-              <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                I'm a passionate Full Stack Developer with over 3 years of experience
-                in building web applications. I specialize in creating elegant solutions
-                to complex problems and am constantly learning new technologies to stay
-                at the forefront of web development.
+          {/* ── LEFT: Bio ── */}
+          <div className="flex flex-col gap-10">
+
+            {/* Section heading */}
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+              About Me
+            </h2>
+
+            {/* Bio paragraphs — large, readable */}
+            <div className="flex flex-col gap-6">
+              <p className="text-xl md:text-2xl font-semibold leading-snug text-slate-900 dark:text-slate-100 transition-colors duration-300">
+                Full Stack Developer based out of IIT Kanpur.
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-400 transition-colors duration-300">
+                I've built browser extensions, AI meeting tools, secure code runners, and interview assistants, all solo, all shipped.
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-400 transition-colors duration-300">
+                I care about clean architecture, fast products, and code that doesn't break at 2am.
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-400 transition-colors duration-300">
+                Looking for full-stack internship roles where I can build real things.
               </p>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-6">
-              {stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="bg-white dark:bg-slate-800 p-6 rounded-xl text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 group"
+            {/* Tags */}
+            <div className="flex flex-wrap gap-3">
+              {['Available for Internships', 'Open to Relocate'].map((tag) => (
+                <span
+                  key={tag}
+                  className="text-sm text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 px-4 py-2 transition-colors duration-300"
+                  style={{ fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.04em' }}
                 >
-                  <div className="text-blue-400 mb-2 group-hover:scale-110 transition-transform duration-300">
-                    {stat.icon}
-                  </div>
-                  <div className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">{stat.label}</div>
-                </div>
+                  {tag}
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Right Column - Skills */}
-          <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl transform hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300">
-            <h3 className="text-2xl font-semibold mb-8 text-blue-400">Skills & Expertise</h3>
-            <div className="space-y-6">
-              {skills.map((skill) => (
-                <div key={skill.name} className="group">
-                  <div className="flex justify-between mb-2">
-                    <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-400 transition-colors">
-                      {skill.name}
-                    </span>
-                    <span className="text-slate-600 dark:text-slate-400">{skill.level}%</span>
-                  </div>
-                  <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transform origin-left transition-transform duration-1000 ease-out group-hover:scale-x-105"
-                      style={ { width: `${skill.level}%` } }
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+          {/* ── RIGHT: Tech Stack ── */}
+          <div className="flex flex-col gap-10 lg:pt-16">
+            {techStack.map(({ category, skills }) => (
+              <div key={category} className="flex flex-col gap-3">
 
-        {/* Additional Skills Tags */}
-        <div className="mt-16">
-          <h3 className="text-xl font-semibold mb-6 text-center text-blue-400">
-            Additional Technologies
-          </h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            {[
-              'HTML5', 'CSS3', 'Git', 'MongoDB', 'PostgreSQL', 'REST APIs',
-              'GraphQL', 'Docker', 'AWS', 'Firebase', 'Redux', 'Material-UI'
-            ].map((tech) => (
-              <span
-                key={tech}
-                className="px-4 py-2 bg-white dark:bg-slate-800 rounded-full text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-blue-500/20 hover:text-blue-400 transition-all duration-300 cursor-default"
-              >
-                {tech}
-              </span>
+                {/* Category label + divider */}
+                <div className="flex items-center gap-4">
+                  <p
+                    className="text-xs font-medium tracking-widest text-slate-400 dark:text-slate-500 flex-shrink-0 uppercase transition-colors duration-300"
+                    style={{ fontFamily: "'JetBrains Mono', monospace" }}
+                  >
+                    {category}
+                  </p>
+                  <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700 transition-colors duration-300" />
+                </div>
+
+                {/* Skills text */}
+                <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed transition-colors duration-300">
+                  {skills}
+                </p>
+              </div>
             ))}
           </div>
+
         </div>
       </div>
+
+      {/* ── TICKER STRIP ── */}
+      <div className="border-t border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 overflow-hidden py-4 transition-colors duration-300">
+        <div className="animate-ticker">
+          <TickerContent />
+          <TickerContent />
+          <TickerContent />
+          <TickerContent />
+        </div>
+      </div>
+
     </section>
   );
 };

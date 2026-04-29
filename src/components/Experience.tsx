@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, MapPin } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const experiences = [
   {
@@ -24,7 +25,7 @@ const experiences = [
       'Managed and regularly updated the Society of Civil Engineering website to showcase events, resources, and announcements',
       'Collaborated with council members to ensure timely, accurate, and user-friendly web content for the student community'
     ]
-  }, 
+  },
   {
     title: 'Secretary (Design)',
     company: 'Entrepreneurship Cell',
@@ -50,55 +51,54 @@ const experiences = [
 ];
 
 const Experience = () => {
+  const { theme } = useTheme();
   return (
-    <section id="experience" className="py-20 bg-gray-50 dark:bg-slate-800/50 transition-colors duration-300">
+    <section id="experience" className={`py-20 transition-colors duration-300 ${theme === 'dark' ? 'bg-slate-800' : 'bg-slate-50'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
             Work Experience
           </h2>
-          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          <p className={`max-w-2xl mx-auto ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
             My professional journey and the companies I've had the pleasure to work with.
           </p>
         </div>
 
         <div className="relative">
-          {/* Timeline line - hidden on mobile */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-blue-200 dark:bg-blue-900" />
+          <div className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-200'}`} />
 
-          {/* Experience items */}
           <div className="space-y-8 md:space-y-12">
             {experiences.map((exp, index) => (
-              <div
-                key={index}
-                className="relative group"
-              >
-                {/* Timeline dot - hidden on mobile */}
-                <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full" />
+              <div key={index} className="relative group">
+                <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full ring-4 ring-blue-500/20" />
 
-                {/* Content */}
-                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-8 md:pr-0' : 'md:mr-auto md:pr-8 md:pl-0'}`}>
-                  <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:ml-auto md:pl-8' : 'md:mr-auto md:pr-8'}`}>
+                  <div className={`p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border ${
+                    theme === 'dark'
+                      ? 'bg-slate-700 border-slate-600 hover:border-blue-500/50'
+                      : 'bg-white border-slate-200 hover:border-blue-300'
+                  }`}>
+                    <h3 className={`text-xl font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                       {exp.title}
                     </h3>
-                    <h4 className="text-blue-500 font-semibold mb-2">{exp.company}</h4>
-                    
-                    <div className={`flex flex-col sm:flex-row gap-4 text-sm text-slate-600 dark:text-slate-400 mb-4 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
+                    <h4 className="text-blue-500 font-semibold mb-3">{exp.company}</h4>
+
+                    <div className={`flex flex-col sm:flex-row gap-3 text-sm mb-4 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>
                       <div className="flex items-center gap-1">
-                        <Calendar size={16} />
+                        <Calendar size={14} />
                         <span>{exp.period}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <MapPin size={16} />
+                        <MapPin size={14} />
                         <span>{exp.location}</span>
                       </div>
                     </div>
-                    
-                    <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+
+                    <ul className={`space-y-2 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                       {exp.description.map((item, i) => (
-                        <li key={i} className="text-sm">
-                          • {item}
+                        <li key={i} className="text-sm flex gap-2">
+                          <span className="text-blue-500 mt-0.5">•</span>
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>

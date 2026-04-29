@@ -10,8 +10,7 @@ const Navbar = () => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  // Define the profile image path once to use everywhere
-  const profileImagePath = "/lovec.jpg"; // <-- Make sure this path is correct
+  const profileImagePath = "/lovec.jpg";
 
   const navItems = [
     { label: 'Home', href: '#home' },
@@ -37,9 +36,7 @@ const Navbar = () => {
 
   useEffect(() => {
     document.body.style.overflow = (isOpen || showProfileModal) ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    return () => { document.body.style.overflow = 'auto'; };
   }, [isOpen, showProfileModal]);
 
   return (
@@ -51,86 +48,89 @@ const Navbar = () => {
             animate={{ y: 0 }}
             exit={{ y: -100 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className={`fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl rounded-lg border ${
-              theme === 'dark' 
-                ? 'border-slate-700 bg-slate-800/95' 
-                : 'border-slate-200 bg-white/95'
-            } backdrop-blur-md shadow-sm`}
+            className={`fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl rounded-xl border backdrop-blur-md shadow-lg ${theme === 'dark'
+                ? 'border-slate-700 bg-slate-900/95'
+                : 'border-blue-100 bg-white/95'
+              }`}
           >
-            <div className="absolute inset-0 rounded-lg pointer-events-none border border-slate-300/20 dark:border-slate-600/20" />
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between h-14">
                 <div className="flex-shrink-0 flex items-center gap-3">
                   <img
                     src={profileImagePath}
                     alt="Profile"
-                    className="w-8 h-8 rounded-full border-2 border-slate-400 shadow cursor-pointer hover:scale-110 transition-all"
+                    className="w-8 h-8 rounded-full border-2 border-blue-400 shadow cursor-pointer hover:scale-110 transition-all"
                     onClick={() => setShowProfileModal(true)}
                   />
-                  <a href="#" className="text-lg font-medium">
-                    <span className={theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}>
-                      Portfolio
+                  <a href="#" className="text-lg font-bold">
+                    <span className="text-blue-500">
+                      Love Chourasia
                     </span>
                   </a>
                 </div>
 
-                {/* --- DESKTOP NAVIGATION RESTORED --- */}
-                <div className="hidden md:flex items-center space-x-4">
-                  <div className="flex items-center space-x-4">
-                    {navItems.map((item) => (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        className={`relative px-3 py-1.5 text-sm font-medium rounded-md ${
-                          theme === 'dark' 
-                            ? 'text-slate-300 hover:bg-slate-700 hover:text-slate-100' 
-                            : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                        } transition-colors`}
-                      >
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
+                {/* Desktop Navigation */}
+                <div className="hidden md:flex items-center space-x-1">
+                  {navItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className={`relative px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${theme === 'dark'
+                          ? 'text-slate-300 hover:bg-slate-800 hover:text-blue-400'
+                          : 'text-slate-700 hover:bg-blue-50 hover:text-blue-600'
+                        }`}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
 
-                  <div className="w-px h-6 mx-1 bg-slate-300 dark:bg-slate-600" />
+                  <div className={`w-px h-6 mx-2 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
 
+                  {/* Dark Mode Toggle */}
                   <button
                     onClick={toggleTheme}
-                    className={`p-2 rounded-md ${
-                      theme === 'dark' 
-                        ? 'hover:bg-slate-700 text-slate-300' 
-                        : 'hover:bg-slate-100 text-slate-700'
-                    } transition-colors`}
+                    className={`relative w-14 h-7 rounded-full transition-colors duration-300 flex items-center px-1 ${theme === 'dark' ? 'bg-blue-600' : 'bg-slate-200'
+                      }`}
                     aria-label="Toggle theme"
                   >
-                    {theme === 'dark' ? (
-                      <Sun className="w-4 h-4" />
-                    ) : (
-                      <Moon className="w-4 h-4" />
-                    )}
+                    <motion.div
+                      className="w-5 h-5 rounded-full bg-white shadow flex items-center justify-center"
+                      animate={{ x: theme === 'dark' ? 28 : 0 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    >
+                      {theme === 'dark'
+                        ? <Moon className="w-3 h-3 text-blue-600" />
+                        : <Sun className="w-3 h-3 text-yellow-500" />
+                      }
+                    </motion.div>
                   </button>
                 </div>
-                
-                {/* --- MOBILE CONTROLS RESTORED --- */}
-                <div className="md:hidden flex items-center gap-1">
+
+                {/* Mobile Controls */}
+                <div className="md:hidden flex items-center gap-2">
                   <button
                     onClick={toggleTheme}
-                    className={`p-2 rounded-md ${
-                      theme === 'dark' 
-                        ? 'hover:bg-slate-700 text-slate-300' 
-                        : 'hover:bg-slate-100 text-slate-700'
-                    } transition-colors`}
+                    className={`relative w-12 h-6 rounded-full transition-colors duration-300 flex items-center px-1 ${theme === 'dark' ? 'bg-blue-600' : 'bg-slate-200'
+                      }`}
                     aria-label="Toggle theme"
                   >
-                    {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                    <motion.div
+                      className="w-4 h-4 rounded-full bg-white shadow flex items-center justify-center"
+                      animate={{ x: theme === 'dark' ? 24 : 0 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    >
+                      {theme === 'dark'
+                        ? <Moon className="w-2.5 h-2.5 text-blue-600" />
+                        : <Sun className="w-2.5 h-2.5 text-yellow-500" />
+                      }
+                    </motion.div>
                   </button>
                   <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className={`p-2 rounded-md ${
-                      theme === 'dark' 
-                        ? 'hover:bg-slate-700 text-slate-300' 
-                        : 'hover:bg-slate-100 text-slate-700'
-                    } transition-colors`}
+                    className={`p-2 rounded-lg ${theme === 'dark'
+                        ? 'hover:bg-slate-800 text-slate-300'
+                        : 'hover:bg-blue-50 text-slate-700'
+                      } transition-colors`}
                     aria-label="Toggle menu"
                   >
                     {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -142,7 +142,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {/* --- MOBILE MENU RESTORED --- */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -153,28 +153,13 @@ const Navbar = () => {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
             <div className="flex flex-col h-full">
-              <div className="flex justify-between items-center p-4 border-b border-slate-200 dark:border-slate-700">
-                <div className="flex items-center gap-3">
-                  <img
-                    src={profileImagePath}
-                    alt="Profile"
-                    className="w-8 h-8 rounded-full border-2 border-slate-400 shadow cursor-pointer"
-                    onClick={() => {
-                      setShowProfileModal(true);
-                      setIsOpen(false);
-                    }}
-                  />
-                  <span className={`text-lg font-medium ${theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}`}>
-                    Portfolio
-                  </span>
-                </div>
-                <button 
-                  onClick={() => setIsOpen(false)} 
-                  className={`p-2 rounded-md ${
-                    theme === 'dark' 
-                      ? 'hover:bg-slate-800 text-slate-300' 
-                      : 'hover:bg-slate-100 text-slate-700'
-                  } transition-colors`}
+              <div className={`flex justify-between items-center p-4 border-b ${theme === 'dark' ? 'border-slate-700' : 'border-blue-100'}`}>
+                <span className="text-lg font-bold text-blue-500">
+                  Portfolio
+                </span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className={`p-2 rounded-lg ${theme === 'dark' ? 'hover:bg-slate-800 text-slate-300' : 'hover:bg-blue-50 text-slate-700'} transition-colors`}
                   aria-label="Close menu"
                 >
                   <X className="w-6 h-6" />
@@ -186,15 +171,14 @@ const Navbar = () => {
                   <motion.a
                     key={item.label}
                     href={item.href}
-                    className={`px-4 py-4 rounded-lg text-left text-lg font-medium ${
-                      theme === 'dark' 
-                        ? 'hover:bg-slate-800 text-slate-100' 
-                        : 'hover:bg-slate-100 text-slate-800'
-                    } transition-colors`}
+                    className={`px-4 py-4 rounded-xl text-left text-lg font-medium ${theme === 'dark'
+                        ? 'hover:bg-slate-800 text-slate-100'
+                        : 'hover:bg-blue-50 text-slate-800 hover:text-blue-600'
+                      } transition-colors`}
                     onClick={() => setIsOpen(false)}
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.07 }}
                   >
                     {item.label}
                   </motion.a>
@@ -205,7 +189,7 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {/* --- PROFILE PICTURE MODAL (CORRECTED) --- */}
+      {/* Profile Picture Modal */}
       <AnimatePresence>
         {showProfileModal && (
           <motion.div
@@ -226,7 +210,7 @@ const Navbar = () => {
               <img
                 src={profileImagePath}
                 alt="Profile Large"
-                className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-white/90 shadow-2xl"
+                className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-blue-400 shadow-2xl"
               />
               <button
                 onClick={() => setShowProfileModal(false)}

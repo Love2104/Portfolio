@@ -11,9 +11,9 @@ import Footer from './components/Footer';
 const App = () => {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
+      <div className="min-h-screen transition-colors duration-300 dark:bg-slate-900 bg-white">
         <Navbar />
-        <main className="text-slate-900 dark:text-slate-200">
+        <main>
           <Hero />
           <About />
           <Projects />
